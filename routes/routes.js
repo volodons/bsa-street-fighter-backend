@@ -2,6 +2,7 @@ import { router as userRoutes } from "./userRoutes.js";
 import { router as authRoutes } from "./authRoutes.js";
 import { router as fighterRoutes } from "./fighterRoutes.js";
 import { router as fightRoutes } from "./fightRoutes.js";
+import { createUserValid } from "../middlewares/user.validation.middleware.js";
 
 const initRoutes = (app) => {
   app.use("/api/users", userRoutes);
