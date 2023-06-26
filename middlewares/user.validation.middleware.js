@@ -2,7 +2,6 @@ import { USER } from "../models/user.js";
 import { userRepository } from "../repositories/userRepository.js";
 
 const createUserValid = (req, res, next) => {
-  // TODO: Implement validatior for USER entity during creation
   const data = {};
   try {
     validate(req.body, data, "create");
@@ -14,7 +13,6 @@ const createUserValid = (req, res, next) => {
 };
 
 const updateUserValid = (req, res, next) => {
-  // TODO: Implement validatior for user entity during update
   const data = {};
   if (!req.params.id) {
     req.err = { message: "Need Id" };
@@ -49,7 +47,7 @@ function validate(body, data, type) {
     }
     if (type === "create") {
       if (typeof body[field] !== "string") {
-        throw { message: "Error" }; // todo Написать нормальнык ошибки
+        throw { message: "Error" };
       }
     } else {
       if (!body[field]) {
@@ -65,7 +63,7 @@ function validate(body, data, type) {
     }
     if (field === "email") {
       const value = body[field];
-      const user = userRepository.getOne({ email: value });
+      const user = userRepository.getOne({ email: value?.toLowerCase() });
       if (user) {
         throw { message: "Error" };
       }
