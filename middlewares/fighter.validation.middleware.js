@@ -62,7 +62,6 @@ function validate(body, data, type) {
       if ((!value && type === "create") || value < 1 || value > 10) {
         throw { message: `Error in ${field}` };
       }
-      data[field] = value;
     }
 
     if (field === "power") {
@@ -70,15 +69,17 @@ function validate(body, data, type) {
       if ((!value && type === "create") || value < 1 || value > 100) {
         throw { message: `Error in ${field}` };
       }
-      data[field] = value;
     }
     if (field === "name") {
       const value = body[field];
-      const user = fighterRepository.getOne({ name: value?.toLowerCase() });
+      const user = fighterRepository.getOne({ name: value });
       if (user) {
         throw { message: `Error in ${field}` };
       }
-      data[field] = body[field].toLowerCase();
+    }
+
+    if (body[field]) {
+      data[field] = body[field];
     }
   }
 }

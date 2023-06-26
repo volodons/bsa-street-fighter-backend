@@ -47,7 +47,7 @@ function validate(body, data, type) {
     }
     if (type === "create") {
       if (typeof body[field] !== "string") {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
     } else {
       if (!body[field]) {
@@ -58,17 +58,17 @@ function validate(body, data, type) {
     if (field === "password") {
       const value = body[field];
       if (!value || value.length < 3) {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
     }
     if (field === "email") {
       const value = body[field];
       const user = userRepository.getOne({ email: value?.toLowerCase() });
       if (user) {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
       if (!value.includes("@gmail.com")) {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
       body[field] = body[field].toLowerCase();
     }
@@ -76,10 +76,10 @@ function validate(body, data, type) {
       const value = body[field];
       const user = userRepository.getOne({ phoneNumber: value });
       if (user) {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
       if (!value.startsWith("+380")) {
-        throw { message: "Error" };
+        throw { message: `Error in ${field}` };
       }
     }
     if (body[field]) {
